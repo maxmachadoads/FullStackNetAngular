@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using ProEventos.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<DataContext>(
+    context => context.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+    );
 
 // Controllers
 builder.Services.AddControllers();
