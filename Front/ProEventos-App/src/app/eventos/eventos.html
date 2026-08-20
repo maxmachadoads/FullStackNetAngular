@@ -1,10 +1,63 @@
-<h1>Eventos de Components</h1>
+<h2>Eventos</h2>
+<hr />
+<div class="form-inline">
+  <div class="d-flex align-items-center mb-2">
+    <label class="mr-2">Filtro:</label>
+    <input type="text" class="form-control me-2 w-auto" placeholder="Buscar"
+    [(ngModel)]="filtroLista" />
+  </div>
+</div>
 
-@for (evento of eventos(); track evento) {
-  <p><b>Tema:</b> {{ evento.tema }}</p>
-  <p><b>Local:</b> {{ evento.local }}</p>
-  <p><b>Data:</b> {{ evento.dataEvento }}</p>
-  <p><b>Qtd Pessoas:</b> {{ evento.qtdPessoas }}</p>
-  <p><b>Lote:</b> {{ evento.lote }}</p>
-  <hr>
-}
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>
+        <button type="button" class="btn btn-outline-light btn-sm" (click)="alterarImg()">
+          {{ !mostrarImg ? 'Ocultar' : 'Exibir' }}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd Pessoas</th>
+      <th>Lote</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+
+  @if (eventos().length > 0) {
+    <tbody>
+      @for (evento of eventos(); track evento.eventoId) {
+        <tr>
+          <td>
+            <div [collapse]="mostrarImg" [isAnimated]="true">
+              <img
+                src="assets/{{ evento.imagemURL }}"
+                alt=""
+                [style.width.px]="widthImg"
+                [style.margin.px]="marginImg"
+              />
+            </div>
+          </td>
+          <td>{{ evento.eventoId }}</td>
+          <td>{{ evento.tema }}</td>
+          <td>{{ evento.local }}</td>
+          <td>{{ evento.dataEvento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ evento.qtdPessoas }}</td>
+          <td>{{ evento.lote }}</td>
+          <td>
+            <button class="btn btn-outline-primary btn-sm me-2">Editar</button>
+            <button class="btn btn-outline-danger btn-sm">Excluir</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  } @else {
+    <tfoot>
+      <tr>
+        <td colspan="8" class="text-center">Nenhum evento encontrado.</td>
+      </tr>
+    </tfoot>
+  }
+</table>

@@ -11,6 +11,16 @@ builder.Services.AddDbContext<DataContext>(
 // Controllers
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowAnyOrigin();
+    });
+});
+
 // OpenAPI nativo do .NET 10
 builder.Services.AddOpenApi();
 
@@ -31,6 +41,8 @@ if (app.Environment.IsDevelopment())
         );
     });
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
