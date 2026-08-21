@@ -1,10 +1,13 @@
-<h2>Eventos</h2>
-<hr />
+<app-titulo [titulo]="'Eventos'"></app-titulo>
 <div class="form-inline">
   <div class="d-flex align-items-center mb-2">
     <label class="mr-2">Filtro:</label>
-    <input type="text" class="form-control me-2 w-auto" placeholder="Buscar"
-    [(ngModel)]="filtroLista" />
+    <input
+      type="text"
+      class="form-control me-2 w-auto"
+      placeholder="Buscar"
+      [(ngModel)]="filtroLista"
+    />
   </div>
 </div>
 
@@ -13,6 +16,7 @@
     <tr>
       <th>
         <button type="button" class="btn btn-outline-light btn-sm" (click)="alterarImg()">
+          <i class="{{ !mostrarImg ? 'fa fa-eye-slash' : 'fa fa-eye' }}"></i>
           {{ !mostrarImg ? 'Ocultar' : 'Exibir' }}
         </button>
       </th>
@@ -28,7 +32,7 @@
 
   @if (eventos().length > 0) {
     <tbody>
-      @for (evento of eventos(); track evento.eventoId) {
+      @for (evento of eventos(); track evento.id) {
         <tr>
           <td>
             <div [collapse]="mostrarImg" [isAnimated]="true">
@@ -40,15 +44,21 @@
               />
             </div>
           </td>
-          <td>{{ evento.eventoId }}</td>
+          <td>{{ evento.id }}</td>
           <td>{{ evento.tema }}</td>
           <td>{{ evento.local }}</td>
-          <td>{{ evento.dataEvento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ evento.dataEvento | DateTimeFormat }}</td>
           <td>{{ evento.qtdPessoas }}</td>
-          <td>{{ evento.lote }}</td>
+          <td>{{ evento.lote?.[0]?.nome }}</td>
           <td>
-            <button class="btn btn-outline-primary btn-sm me-2">Editar</button>
-            <button class="btn btn-outline-danger btn-sm">Excluir</button>
+            <div class="btn-group">
+              <button class="btn btn-outline-primary btn-sm" tooltip="Editar">
+                <i class="fa fa-edit"></i> Editar
+              </button>
+              <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal(template)">
+                <i class="fa fa-trash"></i> Excluir
+              </button>
+            </div>
           </td>
         </tr>
       }
@@ -61,3 +71,12 @@
     </tfoot>
   }
 </table>
+
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza de que deseja deletar este Evento?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>

@@ -1,4 +1,7 @@
 import {
+  onTransitionFinished
+} from "./chunk-3LRDF3OQ.js";
+import {
   Directive,
   ElementRef,
   HostBinding,
@@ -16,52 +19,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
-} from "./chunk-ATWHXDIS.js";
-
-// node_modules/ngx-bootstrap/utils/fesm2022/ngx-bootstrap-utils.mjs
-var win = typeof window !== "undefined" && window || {};
-var document = win.document;
-var location = win.location;
-var gc = win.gc ? () => win.gc() : () => null;
-var performance = win.performance ? win.performance : null;
-var Event = win.Event;
-var MouseEvent = win.MouseEvent;
-var KeyboardEvent = win.KeyboardEvent;
-var EventTarget = win.EventTarget;
-var History = win.History;
-var Location = win.Location;
-var EventListener = win.EventListener;
-var BsVerions;
-(function(BsVerions2) {
-  BsVerions2["isBs4"] = "bs4";
-  BsVerions2["isBs5"] = "bs5";
-})(BsVerions || (BsVerions = {}));
-var _hideMsg = typeof console === "undefined" || !("warn" in console);
-var TRANSITION_FALLBACK_BUFFER_MS = 50;
-function onTransitionFinished(el, property, durationMs, onFinish) {
-  let finished = false;
-  const handler = (e) => {
-    if (e.target !== el || e.propertyName !== property) {
-      return;
-    }
-    finish();
-  };
-  const fallbackTimeoutId = setTimeout(() => finish(), durationMs + TRANSITION_FALLBACK_BUFFER_MS);
-  const cancel = () => {
-    finished = true;
-    el.removeEventListener("transitionend", handler);
-    clearTimeout(fallbackTimeoutId);
-  };
-  const finish = () => {
-    if (finished) {
-      return;
-    }
-    cancel();
-    onFinish();
-  };
-  el.addEventListener("transitionend", handler);
-  return { cancel };
-}
+} from "./chunk-474WE6VK.js";
 
 // node_modules/ngx-bootstrap/collapse/fesm2022/ngx-bootstrap-collapse.mjs
 var COLLAPSE_ANIMATION_DURATION_MS = 400;
