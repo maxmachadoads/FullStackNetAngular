@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-nav',
@@ -17,5 +17,10 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 export class NavComponent {
   isCollapsed = true;
 
+  constructor(private router: Router){}
+
+  showMenu(): boolean {
+    return this.router.url != '/user/login';
+  }
 
 }

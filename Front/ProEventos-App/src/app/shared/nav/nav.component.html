@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+@if (showMenu()){
+<nav class="navbar navbar-expand-lg bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand" routerLink="dashboard">ProEventos</a>
+    <a class="navbar-brand" routerLink="dashboard"><i class="fa fa-users mb-2"></i></a>
 
     <button
       class="navbar-toggler"
@@ -15,7 +16,7 @@
     <div id="navbarNav" class="navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true">
       <ul class="navbar-nav me-auto">
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="eventos">Eventos</a>
+          <a class="nav-link" routerLink="/eventos/lista">Eventos</a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
@@ -40,12 +41,13 @@
             Vinícius
           </a>
           <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="perfil"> Perfil </a>
+            <a class="dropdown-item" routerLink="/user/perfil"> Perfil </a>
             <div role="separator" class="divider"></div>
-            <a class="dropdown-item" href="#"> Sair </a>
+            <a class="dropdown-item" routerLink="/user/login"> Sair </a>
           </div>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+}
