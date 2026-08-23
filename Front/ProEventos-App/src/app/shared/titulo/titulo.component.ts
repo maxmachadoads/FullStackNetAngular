@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-titulo',
   templateUrl: './titulo.component.html',
   styleUrls: ['./titulo.component.scss'],
-  imports: [RouterLink]
+  imports: []
 })
 export class TituloComponent implements OnInit {
   @Input() titulo!: string;

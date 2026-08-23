@@ -1,6 +1,6 @@
 <app-titulo [titulo]="'Perfil'"></app-titulo>
 <div class="card rounded shadow-sm">
-  <form>
+  <form [formGroup]="form">
     <div class="row p-3">
       <!-- COLUNA ESQUERDA -->
       <div class="col-lg-3 pt-1">
@@ -61,7 +61,11 @@
           <div class="col-sm">
             <label class="form-label"> Título </label>
 
-            <select class="form-select">
+            <select
+              class="form-select"
+              formControlName="titulo"
+              [ngClass]="{ 'is-invalid': f.titulo.errors && f.titulo.touched }"
+            >
               <option value=""></option>
               <option value="0">Não Quero</option>
               <option value="Tecnologo">Tecnólogo(a)</option>
@@ -72,18 +76,37 @@
               <option value="Doutor">Doutor(a)</option>
               <option value="PosDoc">Pós Doc</option>
             </select>
+            @if (f.titulo.errors?.required) {
+              <div class="invalid-feedback">titulo é obrigatório.</div>
+            }
           </div>
 
           <div class="col-sm-5">
             <label class="form-label"> Primeiro Nome </label>
 
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="primeiroNome"
+              [ngClass]="{ 'is-invalid': f.primeiroNome.errors && f.primeiroNome.touched }"
+            />
+            @if (f.primeiroNome.errors?.required) {
+              <div class="invalid-feedback">Primeiro Nome é obrigatório.</div>
+            }
           </div>
 
           <div class="col-sm-5">
             <label class="form-label"> Último nome </label>
 
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="ultimoNome"
+              [ngClass]="{ 'is-invalid': f.ultimoNome.errors && f.ultimoNome.touched }"
+            />
+            @if (f.ultimoNome.errors?.required) {
+              <div class="invalid-feedback">Ultimo Nome é obrigatório.</div>
+            }
           </div>
         </div>
 
@@ -91,29 +114,67 @@
           <div class="col-sm-5">
             <label class="form-label"> E-mail </label>
 
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': f.email.errors && f.email.touched }"
+            />
+            @if (f.email.errors?.required) {
+              <div class="invalid-feedback">Email é obrigatório.</div>
+            }
+            @if (f.email.errors?.email) {
+              <div class="invalid-feedback">Email está em formato invalido.</div>
+            }
           </div>
 
           <div class="col-sm-4">
             <label class="form-label"> Telefone </label>
 
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="telefone"
+              [ngClass]="{
+                'is-invalid': f.telefone.errors && f.telefone.touched,
+              }"
+            />
+            @if (f.telefone.errors?.required) {
+              <div class="invalid-feedback">Telefone é obrigatório.</div>
+            }
           </div>
 
           <div class="col-sm">
             <label class="form-label"> Função </label>
 
-            <select class="form-select">
+            <select
+              class="form-select"
+              formControlName="palestrante"
+              [ngClass]="{ 'is-invalid': f.palestrante.errors && f.palestrante.touched }"
+            >
               <option value=""></option>
               <option value="Participante">Participante</option>
               <option value="Palestrante">Palestrante</option>
             </select>
+            @if (f.palestrante.errors?.required) {
+              <div class="invalid-feedback">Palestrante é obrigatório.</div>
+            }
           </div>
 
           <div class="col-12">
             <label class="form-label"> Descrição </label>
 
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="descricao"
+              [ngClass]="{
+                'is-invalid': f.descricao.errors && f.descricao.touched,
+              }"
+            />
+            @if (f.descricao.errors?.required) {
+              <div class="invalid-feedback">Descrição é obrigatório.</div>
+            }
           </div>
         </div>
 
@@ -128,13 +189,35 @@
           <div class="col-sm">
             <label class="form-label"> Senha </label>
 
-            <input type="password" class="form-control" />
+            <input
+              type="password"
+              class="form-control"
+              formControlName="senha"
+              [ngClass]="{ 'is-invalid': f.senha.errors && f.senha.touched }"
+            />
+            @if (f.senha.errors?.required) {
+              <div class="invalid-feedback">Senha é obrigatório.</div>
+            }
+            @if (f.senha.errors?.minlength) {
+              <div class="invalid-feedback">Senha deve conter mínimo 6 caracteres.</div>
+            }
           </div>
 
           <div class="col-sm">
             <label class="form-label"> Confirmar Senha </label>
 
-            <input type="password" class="form-control" />
+            <input
+              type="password"
+              class="form-control"
+              formControlName="confirmeSenha"
+              [ngClass]="{ 'is-invalid': f.confirmeSenha.errors && f.confirmeSenha.touched }"
+            />
+            @if (f.confirmeSenha.errors?.required) {
+              <div class="invalid-feedback">Confirme Senha é obrigatório.</div>
+            }
+            @if (f.confirmeSenha.errors?.mustMatch) {
+              <div class="invalid-feedback">Senha diferente de Confirme Senha.</div>
+            }
           </div>
         </div>
       </div>

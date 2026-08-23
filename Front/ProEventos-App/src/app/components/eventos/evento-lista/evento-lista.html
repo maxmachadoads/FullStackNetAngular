@@ -64,7 +64,7 @@
                 <button
                   class="btn btn-danger btn-md"
                   tooltip="Excluir"
-                  (click)="openModal(template)"
+                  (click)="$event.stopPropagation(); openModal(template)"
                 >
                   <i class="fa fa-trash"></i> <span class="d-none d-sm-inline-block">Excluir</span>
                 </button>
