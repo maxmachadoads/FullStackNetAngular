@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProEventos.Persistence;
-using ProEventos.Domain;
-using ProEventos.Persistence.Contextos;
 using ProEventos.Application.Contratos;
+using ProEventos.Application.Dtos;
 
 namespace ProEventos.API.Controllers
 {
@@ -26,6 +23,8 @@ namespace ProEventos.API.Controllers
             {
                 var eventos = await _eventosServices.GetAllEventosAsync(true);
                 if (eventos == null) return NoContent();
+
+                     
 
                 return Ok(eventos);
             }
@@ -58,7 +57,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 var evento = await _eventosServices.GetAllEventosByTemaAsync(tema, true);
-                if (evento == null) return NoContent();
+                if (evento == null || evento.Length == 0) return NoContent();
 
                 return Ok(evento);
             }
@@ -70,7 +69,7 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Evento model)
+        public async Task<ActionResult> Post(EventoDto model)
         {
             try
             {
@@ -87,7 +86,7 @@ namespace ProEventos.API.Controllers
         }     
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put([FromRoute] int id, Evento model)
+        public async Task<ActionResult> Put([FromRoute] int id, EventoDto model)
         {
             try
             {
