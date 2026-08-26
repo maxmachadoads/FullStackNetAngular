@@ -1,13 +1,13 @@
 import {
+  isPlatformBrowser
+} from "./chunk-D4SRAP6Z.js";
+import {
   getBsVer,
   listenToTriggersV2,
   registerEscClick,
   registerOutsideClick,
   runInZoneRootIfPresent
-} from "./chunk-3LRDF3OQ.js";
-import {
-  isPlatformBrowser
-} from "./chunk-WAMI7YEO.js";
+} from "./chunk-QYCVUEM6.js";
 import {
   ApplicationRef,
   DOCUMENT,
@@ -18,25 +18,29 @@ import {
   Inject,
   Injectable,
   Injector,
-  Observable,
   PLATFORM_ID,
   RendererFactory2,
-  Subject,
   TemplateRef,
-  __spreadProps,
-  __spreadValues,
-  animationFrameScheduler,
   assertInInjectionContext,
   createComponent,
-  fromEvent,
   inject,
-  merge,
-  of,
   setClassMetadata,
-  takeUntil,
   ɵɵdefineInjectable,
   ɵɵinject
-} from "./chunk-474WE6VK.js";
+} from "./chunk-T5WXOWHE.js";
+import {
+  Observable,
+  Subject,
+  animationFrameScheduler,
+  fromEvent,
+  merge,
+  of,
+  takeUntil
+} from "./chunk-RSS3ODKE.js";
+import {
+  __spreadProps,
+  __spreadValues
+} from "./chunk-GOMI4DH3.js";
 
 // node_modules/@angular/core/fesm2022/rxjs-interop.mjs
 function takeUntilDestroyed(destroyRef) {
@@ -1266,4 +1270,4 @@ export {
   PositioningService,
   ComponentLoaderFactory
 };
-//# sourceMappingURL=chunk-Z2RFGECF.js.map
+//# sourceMappingURL=chunk-QFHIPME4.js.map

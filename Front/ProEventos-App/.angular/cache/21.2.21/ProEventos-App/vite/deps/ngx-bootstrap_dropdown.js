@@ -1,13 +1,13 @@
 import {
   ComponentLoaderFactory
-} from "./chunk-Z2RFGECF.js";
-import {
-  animateExpand
-} from "./chunk-3LRDF3OQ.js";
+} from "./chunk-QFHIPME4.js";
 import {
   NgClass
-} from "./chunk-WAMI7YEO.js";
-import "./chunk-EJ6XCIO3.js";
+} from "./chunk-D4SRAP6Z.js";
+import "./chunk-CRND75LV.js";
+import {
+  animateExpand
+} from "./chunk-QYCVUEM6.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -24,10 +24,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewContainerRef,
-  __spreadProps,
-  __spreadValues,
   effect,
-  filter,
   input,
   output,
   setClassMetadata,
@@ -47,7 +44,14 @@ import {
   ɵɵprojectionDef,
   ɵɵproperty,
   ɵɵpureFunction1
-} from "./chunk-474WE6VK.js";
+} from "./chunk-T5WXOWHE.js";
+import {
+  filter
+} from "./chunk-RSS3ODKE.js";
+import {
+  __spreadProps,
+  __spreadValues
+} from "./chunk-GOMI4DH3.js";
 
 // node_modules/ngx-bootstrap/dropdown/fesm2022/ngx-bootstrap-dropdown.mjs
 var _c0 = ["*"];

@@ -8,7 +8,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
 import { DateTimeFormatPipe } from '../../../helpers/DateTimeFormat.pipe';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { Router, RouterLink } from "@angular/router";
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-evento-lista',
@@ -19,14 +19,15 @@ import { Router, RouterLink } from "@angular/router";
     TooltipModule,
     ModalModule,
     ToastrModule,
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './evento-lista.html',
   styleUrl: './evento-lista.scss',
 })
 export class EventoLista {
   modalRef?: BsModalRef;
   toastr = inject(ToastrService);
+  public eventoId = 0;
 
   public eventos = signal<Evento[]>([]);
   private todosEventos = signal<Evento[]>([]);
@@ -41,7 +42,7 @@ export class EventoLista {
     private eventoService: EventoService,
     private modalService: BsModalService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
   ) {}
 
   public ngOnInit(): void {
@@ -80,41 +81,61 @@ export class EventoLista {
   }
 
   public getEventos(): void {
-    this.eventoService.getEventos().subscribe({
-      next: (_eventos: Evento[]) => {
-        console.log('RESPOSTA DA API:', _eventos);
+    this.eventoService
+      .getEventos()
+      .subscribe({
+        next: (_eventos: Evento[]) => {
+          console.log('RESPOSTA DA API:', _eventos);
+          this.todosEventos.set(_eventos);
+          this.eventos.set(_eventos);
+        },
 
-        this.todosEventos.set(_eventos);
-        this.eventos.set(_eventos);
-      },
-
-      error: (error) => {
-        console.error(error);
-        this.toastr.error('Erro ao Carregar os Eventos', 'Erro!');
-        this.spinner.hide();
-      },
-
-      complete: () => {
-        this.spinner.hide();
-        console.log('Requisição concluída');
-      },
-    });
+        error: (error) => {
+          console.error(error);
+          this.toastr.error('Erro ao Carregar os Eventos', 'Erro!');
+        },
+        complete: () => {
+          console.log('Requisição concluída');
+        },
+      })
+      .add(() => this.spinner.hide());
   }
 
-  openModal(template: TemplateRef<void>): void {
+  openModal(event: any, template: TemplateRef<void>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   confirm(): void {
     this.modalRef?.hide();
-    this.toastr.success('O Evento foi deletado com sucesso!', 'Deletado!');
+    this.spinner.show();
+
+    this.eventoService.deleteEvento(this.eventoId).subscribe(
+      (result: any) => {
+        console.log(result);
+        if (result.message === 'Deletado') {
+          this.toastr.success('O Evento foi deletado com sucesso!', 'Deletado!');
+          this.spinner.hide();
+          this.getEventos();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar deletar o evento ${this.eventoId}!`, 'Erro');
+        this.spinner.hide();
+      },
+      () => {
+        this.spinner.hide();
+      },
+    );
   }
 
   decline(): void {
     this.modalRef?.hide();
   }
 
-  detalheEvento(id: number): void{
+  detalheEvento(id: number): void {
     this.router.navigate([`eventos/detalhe/${id}`]);
   }
 }

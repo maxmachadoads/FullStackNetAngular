@@ -1,6 +1,6 @@
 import {
   onTransitionFinished
-} from "./chunk-3LRDF3OQ.js";
+} from "./chunk-QYCVUEM6.js";
 import {
   Directive,
   ElementRef,
@@ -19,7 +19,9 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
-} from "./chunk-474WE6VK.js";
+} from "./chunk-T5WXOWHE.js";
+import "./chunk-RSS3ODKE.js";
+import "./chunk-GOMI4DH3.js";
 
 // node_modules/ngx-bootstrap/collapse/fesm2022/ngx-bootstrap-collapse.mjs
 var COLLAPSE_ANIMATION_DURATION_MS = 400;

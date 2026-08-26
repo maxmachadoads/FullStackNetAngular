@@ -3,16 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProEventos.Domain
 {
-    [Table("EventosDetalhes")]
     public class Evento
     {
-        [Key]
+   
         public int Id { get; set; }
 
         public string? Local { get; set; }
 
         public DateTime? DataEvento { get; set; }
-        [Required]
+       
         public string? Tema { get; set; }
 
         public int QtdPessoas { get; set; }
