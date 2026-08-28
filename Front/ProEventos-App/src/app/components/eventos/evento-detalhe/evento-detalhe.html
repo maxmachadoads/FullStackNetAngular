@@ -7,7 +7,7 @@
           <input
             type="text"
             class="form-control"
-            [ngClass]="cssValidator(f.tema) "
+            [ngClass]="cssValidator(f.tema)"
             formControlName="tema"
             placeholder="Insira o Tema"
           />
@@ -128,13 +128,192 @@
           Cancelar Alteração
         </button>
 
-        <button type="submit" class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
-          <span class="spinner-border spinner-border-sm me-1" [hidden]="!formDir.submitted"></span>
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!form.valid"
+          (click)="salvarAlteracao()"
+        >
+          <span class="spinner-border spinner-border-sm me-1" [hidden]="!savingEvento"></span>
           Salvar Evento
         </button>
       </div>
     </div>
   </form>
 </div>
+@if (modoEditar) {
+  <div class="card rounded shadow-sm mt-4">
+    <div class="p-3">
+      <!-- TÍTULO -->
+      <div class="d-flex border-bottom align-items-center">
+        <h2 class="me-auto mb-1">Lotes do Evento</h2>
 
+        <h2 class="mb-1">
+          <i class="fas fa-money-bill-wave"></i>
+        </h2>
+      </div>
 
+      <p class="mb-3">Clique em Lote para adicionar e preencher novos Lotes</p>
+
+      <!-- LOTE -->
+      <div class="row p-1">
+        <div [formGroup]="form" class="col">
+          <div formArrayName="lotes">
+            @for (lote of lotes.controls; track $index; let i = $index) {
+              <div [formGroupName]="i"  class="mt-3">
+                <fieldset>
+                  <legend class="d-flex justify-content-between capitalize">
+                    {{
+                    retornaTituloLote(lotes.get(i + '.nome')?.value)
+                  }}
+                    <button
+                      type="button"
+                      class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex align-items-center"
+                      tooltip="Excluir Lote"
+                      [adaptivePosition]="false"
+                      [delay]="500"
+                      placement="left"
+                      (click)="removerLote(template, i)"
+                    >
+                      <i class="fa fa-window-close"></i>
+
+                      <b class="ms-1 d-none d-sm-block"> Excluir </b>
+                    </button>
+                  </legend>
+
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label class="form-label">Nome</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="nome"
+                        placeholder="Lote"
+                        [ngClass]="cssValidator(lotes.get(i + '.nome'))"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-label">Quantidade</label>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="quantidade"
+                        placeholder="000"
+                        [ngClass]="cssValidator(lotes.get(i + '.quantidade'))"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-label">Preço</label>
+
+                      <input
+                        type="text"
+                        currencyMask
+                        class="form-control"
+                        formControlName="preco"
+                        placeholder="R$ 0,00"
+                        [ngClass]="cssValidator(lotes.get(i + '.preco'))"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-label">Data Início</label>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="dataInicio"
+                        placeholder="01/01/2019"
+                        [ngClass]="cssValidator(lotes.get(i + '.dataInicio'))"
+                        bsDatepicker
+                        [bsConfig]="bsConfig"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-label">Data Fim</label>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="dataFim"
+                        placeholder="01/01/2019"
+                        [ngClass]="cssValidator(lotes.get(i + '.dataFim'))"
+                        bsDatepicker
+                        [bsConfig]="bsConfig"
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- ADICIONAR LOTE -->
+      <button
+        type="button"
+        class="d-flex align-items-center btn btn-outline-primary mt-3"
+        (click)="adicionarLote()"
+      >
+        <i class="fa fa-plus-circle"></i>
+
+        <b class="ms-1"> Lote </b>
+      </button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <div class="d-flex">
+        <button type="button" class="btn btn-outline-secondary me-auto border">
+          Cancelar Alteração
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="salvarLotes()"
+          [disabled]="!lotes.valid"
+        >
+          Salvar Lotes
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Tem certeza de que deseja deletar o Lote de codigo {{ this.loteAtual.nome }}?</p>
+      <button type="button" class="btn btn-default" (click)="confirmDeleteLote()">Sim</button>
+      <button type="button" class="btn btn-primary" (click)="declineDeleteLote()">Não</button>
+    </div>
+  </ng-template>
+}
+
+<style type="text/css">
+  .iconesSociais {
+    color: rgb(94, 94, 94);
+  }
+
+  .capitalize {
+    text-transform: capitalize;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    color: silver;
+  }
+
+  .tab-pane {
+    padding: 20px 8px 8px;
+    border-top: 0;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+  }
+
+  .card-evento {
+    position: sticky;
+    --default-height: 25px;
+    top: var(--default-height);
+  }
+</style>

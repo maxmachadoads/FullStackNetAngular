@@ -19,8 +19,11 @@ builder.Services.AddControllers()
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IEventosServices, EventoService>();
+builder.Services.AddScoped<ILoteServices, LoteService>();
+
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
 builder.Services.AddScoped<IEventoPersist, EventoPersist>();
+builder.Services.AddScoped<ILotePersist, LotePersist>();
 
 
 builder.Services.AddCors(options =>

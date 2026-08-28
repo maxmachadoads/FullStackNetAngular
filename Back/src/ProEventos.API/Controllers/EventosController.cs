@@ -40,7 +40,7 @@ namespace ProEventos.API.Controllers
         {
              try
             {
-                var evento = await _eventosServices.GetEventoByIdsync(id, true);
+                var evento = await _eventosServices.GetEventoByIdAsync(id, true);
                 if (evento == null) return NoContent();
 
                 return Ok(evento);
