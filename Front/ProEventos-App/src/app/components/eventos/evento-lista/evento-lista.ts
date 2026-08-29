@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { DateTimeFormatPipe } from '../../../helpers/DateTimeFormat.pipe';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-evento-lista',
@@ -78,6 +79,10 @@ export class EventoLista {
 
   public alterarImg(): void {
     this.mostrarImg = !this.mostrarImg;
+  }
+
+  public mostrarImagem(imagemURL: string): string{
+    return (imagemURL != '') ? `${environment.apiURL}resources/images/${imagemURL}` : 'assets/img/noimagem.jpeg';
   }
 
   public getEventos(): void {

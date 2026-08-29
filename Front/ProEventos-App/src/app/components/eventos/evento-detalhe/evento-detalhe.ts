@@ -24,6 +24,8 @@ import { Lote } from '../../../models/Lote';
 import { LoteService } from '../../../services/lote.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -41,6 +43,8 @@ export class EventoDetalhe implements OnInit {
   estadoSalvar: 'post' | 'put' = 'post';
   loteAtual = { id: 0, nome: '', indice: 0 };
   savingEvento = false;
+  imagemURL = 'assets/img/upload.png';
+  file?: FileList;
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -96,6 +100,10 @@ export class EventoDetalhe implements OnInit {
           next: (evento: Evento) => {
             this.evento = { ...evento };
             this.form.patchValue(this.evento);
+            if(this.evento.imagemURL != ''){
+              this.imagemURL =  environment.apiURL + 'resources/images/' + this.evento.imagemURL;
+            }
+            this.lotes.clear();
             this.evento.lote?.forEach((lote) => {
               this.lotes.push(this.criarLote(lote));
             });
@@ -146,7 +154,7 @@ export class EventoDetalhe implements OnInit {
       qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
       telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      imagemURL: ['', Validators.required],
+      imagemURL: ['', ],
       lotes: this.fb.array([]),
     });
   }
@@ -255,5 +263,39 @@ export class EventoDetalhe implements OnInit {
 
   declineDeleteLote(): void {
     this.modalRef.hide();
+  }
+
+  public onFileChange(ev: any): void {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagemURL = reader.result as string;
+      this.cdr.markForCheck();
+    };
+
+    this.file = ev.target.files;
+
+    if (this.file && this.file.length > 0) {
+      reader.readAsDataURL(this.file[0]);
+      this.uploadImagem(this.file);
+    }
+  }
+
+  uploadImagem(file: FileList): void {
+    this.spinner.show();
+    this.eventoService
+      .postUpload(this.eventoId, file)
+      .subscribe({
+        next: () => {
+          this.carregarEvento();
+          this.toastr.success('Imagem atualizada com sucesso!', 'Sucesso');
+        },
+        error: (error) => {
+          this.toastr.error('Erro ao tentar fazer upload da imagem', 'Erro');
+          console.error(error);
+        },
+        complete: () => {},
+      })
+      .add(() => this.spinner.hide());
   }
 }
